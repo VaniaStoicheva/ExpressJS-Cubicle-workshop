@@ -6,7 +6,7 @@ const databaseFile=path.join(__dirname,'..','config/database.json')
 class Cube{
     constructor(name, description, imgUrl,difficulty){
         this.id=v4()
-        this.name=description
+        this.name=name
         this.description=description
         this.imgUrl=imgUrl
         this.difficulty=difficulty
@@ -27,8 +27,9 @@ class Cube{
                 throw error
             }
             const cubes=JSON.parse(dbData)
-            console.log(cubes)
+            
             cubes.push(newCube)
+            console.log(newCube)
 
             fs.writeFile(databaseFile,JSON.stringify(cubes),error=>{
                 if(error){

@@ -1,5 +1,5 @@
 {
-    "name": "Cubicle",
+    "name": "name",
     "description": "test app",
     "authors": "author",
     "version": "1.0.0",
@@ -13,5 +13,8 @@
     },
     "devDependencies": {
         "nodemon": "^1.19.2"
+    },
+    "scripts": {
+        "start": "nodemon"
     }
 }
