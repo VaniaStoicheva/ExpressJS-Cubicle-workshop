@@ -1,7 +1,5 @@
 const { v4 }=require('uuid');
-const fs=require('fs')
-const path=require('path')
-const databaseFile=path.join(__dirname,'..','config/database.json')
+const { saveCube } = require('../controllers/database');
 
 class Cube{
     constructor(name, description, imgUrl,difficulty){
@@ -22,22 +20,7 @@ class Cube{
 
         }
 
-        fs.readFile(databaseFile,(error,dbData)=>{
-            if(error){
-                throw error
-            }
-            const cubes=JSON.parse(dbData)
-            
-            cubes.push(newCube)
-            console.log(newCube)
-
-            fs.writeFile(databaseFile,JSON.stringify(cubes),error=>{
-                if(error){
-                 throw error
-                }
-                console.log("New cube successfuly stored") 
-             }) 
-        })
+        saveCube(newCube)
        
     }
 }
