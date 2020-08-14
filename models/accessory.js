@@ -10,7 +10,7 @@ const { ObjectID, ObjectId } = require('mongodb')
           },
           description:{
                 type:String,
-                required:TextTrackCue,
+                required:true,
                 maxlength:200
           },
           imageUrl:{
@@ -23,5 +23,9 @@ const { ObjectID, ObjectId } = require('mongodb')
               ref:'Cube'
           }]
       })
+
+      AccessoryShema.path('imageUrl').validate(function(url){
+        return url.startsWith('http://') || url.startsWith('https://')
+    }, 'Image URL is not valid')
 
 module.exports=mongoose.model('Accessory',AccessoryShema)
