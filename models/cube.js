@@ -2,25 +2,25 @@ const { v4 }=require('uuid');
 const { saveCube } = require('../controllers/database');
 
 class Cube{
-    constructor(name, description, imgUrl,difficulty){
+    constructor(name, description, imageUrl,difficulty){
         this.id=v4()
         this.name=name
         this.description=description
-        this.imgUrl=imgUrl
+        this.imageUrl=imageUrl
         this.difficulty=difficulty
     }
 
-    save(){
+    save(callback){
         const newCube={
             id:this.id,
             name:this.name,
             description:this.description,
-            imgUrl:this.imgUrl,
+            imageUrl:this.imageUrl,
             difficulty:this.difficulty
 
         }
 
-        saveCube(newCube)
+        saveCube(newCube,callback)
        
     }
 }
