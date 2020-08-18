@@ -1,15 +1,35 @@
-const fs=require('fs')
-const { getCubes}=require('./database')
+const Cube=require('../models/cube')
 
-const getAllCubes=(callback)=>{
-  getCubes((cubes)=>{
-callback(cubes)
-  })  
-    
+const getAllCubes = async () => {
+  const cubes = await Cube.find().lean()
+  return cubes
 }
 
+const getCube=async (id)=>{
+const cube= await Cube.findById(id).lean()
+  return cube
+}
+
+const getCubeWithAccessories = async (id) => {
+  const cube = await Cube.findById(id).populate('accessories').lean()
+
+  return cube
+
+  }
+
+const updateCube= async (cubeId,accessoryId)=>{
+  await Cube.findByIdAndUpdate(cubeId,{
+    $addToSet:{
+      accessories:[accessoryId]
+    }
+    
+  })
+}
 
 module.exports={
-    getAllCubes
+    getAllCubes,
+    getCube,
+    updateCube,
+    getCubeWithAccessories
     
 }

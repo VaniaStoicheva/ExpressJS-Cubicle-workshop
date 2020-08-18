@@ -1,19 +1,19 @@
 const {Router}=require('express')
-const { getAllCubes}=require('../controllers/cube')
-const {getCube}=require('../controllers/database')
-const {Cube}=require('../models/cube')
+const { getAllCubes,getCube,updateCube,getCubeWithAccessories}=require('../controllers/cube')
+const { getAccessories}=require('../controllers/accessories')
+const Cube =require('../models/cube')
+const Accessory=require('../models/accessory')
+const { update } = require('../models/cube')
 
 
 const router= new Router()
 
-router.get('/',(req,res)=>{
-    
-    getAllCubes((cubes)=>{
-       // console.log(getAllCubes)
+router.get('/',async (req,res)=>{
+    const cubes=await getAllCubes()
         res.render('index',{
             title:'Cube workshop',
             cubes
-        })
+    
     })
    
 })
@@ -24,43 +24,7 @@ router.get('/about',(req,res)=>{
     })
 })
 
-router.get('/create',(req,res)=>{
-    res.render('create',{
-        title:'Create Cube | Cube workshop'
-    })
-})
 
-router.post('/create',(req,res)=>{
-    console.log(req.body)
-    const {
-        name,
-        description,
-        imageUrl,
-        diffcultyLevel
-    }=req.body
-
-    const cube=new Cube( name, description, imageUrl, diffcultyLevel)
-    cube.save(()=>{
-        res.redirect('/')
-    })
-
-})
-
-router.get('/details/:id',(req,res)=>{
-    getCube(req.params.id,(cube=>{
-        res.render('details',{
-            title:'Details  Cube |Cube workshop ',
-            ...cube
-        })
-    }))
-    
-})
-
-router.get('*',(req,res)=>{
-    res.render('404',{
-        title:'Error'
-    })
-})
 module.exports=router
     
   
